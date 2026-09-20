@@ -1,0 +1,32 @@
+name: Release PR title gate
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+
+jobs:
+  enforce-release-title:
+    name: Enforce Release title
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if [ "$HEAD_REF" = "dev" ] && [[ "$PR_TITLE" != Release:* ]]; then
+            echo "::error::dev -> main pull requests must start with 'Release:'"
+            exit 1
+          fi
+
+          echo "Release PR title is valid."
