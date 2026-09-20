@@ -1,0 +1,7 @@
+services:
+  engine:
+    platform: linux/amd64
+    build:
+      context: .
+    image: simulated-singularity:phase1
+    gpus: all
