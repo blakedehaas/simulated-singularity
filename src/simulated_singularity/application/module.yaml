@@ -1,0 +1,29 @@
+name: simulated_singularity.application
+purpose: Evaluate the implemented runtime foundation through a supplied observation port.
+public_api:
+  - simulated_singularity.application.diagnostics.RuntimeFacts
+  - simulated_singularity.application.diagnostics.RuntimeProbe
+  - simulated_singularity.application.diagnostics.DiagnosticCheck
+  - simulated_singularity.application.diagnostics.DoctorReport
+  - simulated_singularity.application.diagnostics.run_doctor
+owns:
+  - runtime observation and report contracts
+  - canonical foundation compatibility policy
+depends_on:
+  - dataclasses
+  - typing
+prohibited_dependencies:
+  - simulated_singularity.infrastructure
+  - simulated_singularity.interfaces
+  - simulated_singularity.bootstrap
+  - deployment and filesystem APIs
+  - CLI and HTTP frameworks
+  - provider libraries
+invariants:
+  - Facts and reports are immutable dataclasses.
+  - The probe is inspected once per evaluation.
+  - Checks are ordered operating_system, architecture, python.
+  - Passing requires Linux, x86_64, and Python 3.12.
+  - Every required check must pass; unknown observations fail.
+  - Reports make no GPU, provider, model, or persistence claims.
+  - Observation failures propagate.

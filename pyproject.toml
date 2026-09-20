@@ -1,0 +1,88 @@
+[build-system]
+requires = ["hatchling==1.32.3"]
+build-backend = "hatchling.build"
+
+[project]
+name = "simulated-singularity"
+version = "0.1.0"
+description = "The architectural foundation for a LangGraph-native artifact factory."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+dependencies = ["typer==0.27.2"]
+
+[project.scripts]
+ss = "simulated_singularity.interfaces.cli.app:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/simulated_singularity"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = [".validation-venv", ".tools", ".validation"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-config --strict-markers --import-mode=importlib --cov=simulated_singularity --cov-report=term-missing --cov-report=xml --cov-fail-under=100"
+
+[tool.coverage.run]
+branch = true
+source = ["simulated_singularity"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+
+[tool.importlinter]
+root_package = "simulated_singularity"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Interfaces call the composition root; adapters implement application ports"
+type = "layers"
+layers = [
+  "interfaces",
+  "bootstrap",
+  "infrastructure",
+  "application",
+]
+containers = ["simulated_singularity"]
+exhaustive = true
+exhaustive_ignores = []
+
+[[tool.importlinter.contracts]]
+name = "CLI does not construct infrastructure"
+type = "forbidden"
+source_modules = ["simulated_singularity.interfaces"]
+forbidden_modules = ["simulated_singularity.infrastructure"]
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Application is independent of deployment and presentation"
+type = "forbidden"
+source_modules = ["simulated_singularity.application"]
+forbidden_modules = [
+  "typer", "click", "rich", "platform", "sys", "os", "pathlib", "sqlite3",
+  "subprocess", "ctypes", "docker", "torch", "qwen_tts", "whisper", "ffmpeg",
+  "google", "fastapi", "flask",
+]
+
+[[tool.importlinter.contracts]]
+name = "Implemented modules are acyclic"
+type = "acyclic_siblings"
+ancestors = ["simulated_singularity"]

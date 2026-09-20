@@ -1,0 +1,18 @@
+name: simulated_singularity.infrastructure
+purpose: Observe the current process for application runtime diagnostics.
+public_api:
+  - simulated_singularity.infrastructure.runtime.LocalRuntimeProbe
+owns:
+  - local operating-system, architecture, and interpreter observation
+depends_on:
+  - simulated_singularity.application
+  - platform
+  - sys
+prohibited_dependencies:
+  - simulated_singularity.interfaces
+  - simulated_singularity.bootstrap
+invariants:
+  - LocalRuntimeProbe structurally implements RuntimeProbe.
+  - Observations are returned as application RuntimeFacts.
+  - The adapter does not choose compatibility policy.
+  - No provider, model, filesystem, or persistent-state checks exist.

@@ -1,0 +1,2 @@
+# Intentional runtime dependencies; keep in sync with project.dependencies.
+typer==0.27.2
