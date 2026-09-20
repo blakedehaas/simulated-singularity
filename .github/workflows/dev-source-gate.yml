@@ -1,0 +1,42 @@
+name: Dev source gate
+
+on:
+  pull_request_target:
+    branches:
+      - dev
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+
+permissions:
+  contents: read
+
+jobs:
+  enforce-dev-source:
+    name: Enforce approved source to dev
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify integration source
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.repository }}
+        run: |
+          echo "Source branch: $HEAD_REF"
+          echo "Source repository: $HEAD_REPO"
+          echo "Target repository: $BASE_REPO"
+
+          if [ "$HEAD_REPO" != "$BASE_REPO" ]; then
+            echo "::error::Pull requests targeting dev must originate from this repository."
+            exit 1
+          fi
+
+          if [ "$HEAD_REF" != "agent-dev" ] && [ "$HEAD_REF" != "blakedehaas" ]; then
+            echo "::error::Pull requests targeting dev must originate from agent-dev or blakedehaas."
+            exit 1
+          fi
+
+          echo "Valid promotion to dev: $HEAD_REF -> dev"
