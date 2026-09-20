@@ -7,15 +7,15 @@ authority; PyPI is not queried to select versions during deployment.
 
 | Purpose | Direct dependencies |
 | --- | --- |
-| Runtime | Typer 0.27.2 (the guide's pin) |
+| Runtime | Typer 0.27.2 (the guide's pin); Phase 2A contracts use only the standard library |
 | Build | pip 26.2.1, Hatchling 1.32.3, build 1.6.1 |
 | Lock generation / editable development | pip-tools 7.6.1, editables 0.6 |
 | Checks | Ruff 0.16.8, mypy 2.3.1, pytest 9.1.1, pytest-cov 7.1.0, import-linter 2.15 |
 | Documentation | MkDocs 1.6.1, mkdocstrings 1.0.6, mkdocstrings-python 2.0.8, mkdocs-gen-files 0.6.1 |
 
 [Typer's official release metadata](https://pypi.org/project/typer/0.27.2/)
-confirms the specified version. Frameworks for future work (LangGraph, Pydantic,
-PyTorch, Qwen, Whisper) are not dependencies of this foundation. Their guide pins
+confirms the specified version. Frameworks for future work (LangGraph, PyTorch,
+Qwen, Whisper) are not dependencies of this foundation. Their guide pins
 must be verified when their phases are authorized.
 
 The guide's `nvidia/cuda:13.0.3-cudnn-runtime-ubuntu24.04` exists. Dockerfile pins its

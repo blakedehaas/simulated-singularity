@@ -1,7 +1,6 @@
 # 0002: LangGraph execution and durable artifacts
 
-Status: Established by the normative specifications; later implementations are
-outside Phase 1.
+Status: Accepted; artifact contracts implemented in Phase 2A and execution remains deferred.
 
 ## Context
 
@@ -17,9 +16,10 @@ implement capability contracts. No competing workflow engine is introduced.
 
 ## Consequences
 
-Phase 1 records these boundaries without adding graph definitions, artifact APIs,
-provider packages, or dependencies that have no implemented consumer. Phase 2
-will implement the immutable artifact foundation. Execution follows separately.
+Phase 2A adds nominal identifiers, immutable artifact and provenance values,
+SHA-256 primitives, and the `ArtifactRepository` port. It adds no persistence
+adapter. The provenance `ExecutionKey` is an opaque value only; execution-key
+derivation, graphs, and caching follow separately.
 
 ## Alternatives considered
 

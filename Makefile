@@ -1,6 +1,6 @@
 PYTHON := .venv/bin/python
 PIP_COMPILE := .venv/bin/pip-compile
-IMAGE := simulated-singularity:phase1
+IMAGE := simulated-singularity:phase2a
 export CUSTOM_COMPILE_COMMAND := make lock
 
 .PHONY: bootstrap lock check lint format types architecture test compile docs package-check container-check release-check
@@ -45,7 +45,7 @@ package-check:
 container-check:
 	docker compose config --quiet
 	docker build --pull --no-cache --platform linux/amd64 --tag $(IMAGE) .
-	docker run --rm --network none $(IMAGE) python -c 'import simulated_singularity'
+	docker run --rm --network none $(IMAGE) python -c 'import simulated_singularity; import simulated_singularity.platform.artifacts; import simulated_singularity.platform.identifiers'
 	docker run --rm --network none $(IMAGE) ss --help
 	docker run --rm --network none $(IMAGE) ss doctor
 	docker run --rm --network none $(IMAGE) ss doctor --json

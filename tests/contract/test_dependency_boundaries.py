@@ -37,6 +37,16 @@ ROOT = Path(__file__).resolve().parents[2]
             "from pathlib import Path",
             "Application is independent of deployment and presentation",
         ),
+        (
+            "platform/artifacts/models.py",
+            "from pathlib import Path",
+            "Platform contracts are independent of adapters and deployment",
+        ),
+        (
+            "platform/identifiers/models.py",
+            "import simulated_singularity.platform.artifacts.models",
+            "Artifact contracts depend inward on identifiers",
+        ),
     ],
 )
 def test_import_contracts_reject_real_boundary_violations(

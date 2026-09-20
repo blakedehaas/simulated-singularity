@@ -27,7 +27,18 @@ subprocess.run(
 subprocess.run([str(python), "-m", "pip", "install", "--no-deps", str(wheel)], check=True)
 subprocess.run([str(python), "-m", "pip", "check"], check=True)
 subprocess.run(
-    [str(python), "-I", "-c", "import simulated_singularity"], cwd=environment, check=True
+    [
+        str(python),
+        "-I",
+        "-c",
+        (
+            "import simulated_singularity; "
+            "import simulated_singularity.platform.artifacts; "
+            "import simulated_singularity.platform.identifiers"
+        ),
+    ],
+    cwd=environment,
+    check=True,
 )
 command = str(environment / "bin/ss")
 subprocess.run([command, "--help"], cwd=environment, check=True)
@@ -37,4 +48,6 @@ report = subprocess.run(
 payload = json.loads(report.stdout)
 assert payload["schema_version"] == 1 and payload["passed"] is True
 assert len(payload["checks"]) == 3
-print("Isolated installed wheel: import, dependency consistency, CLI, and doctor JSON passed.")
+print(
+    "Isolated installed wheel: public imports, dependency consistency, CLI, and doctor JSON passed."
+)
