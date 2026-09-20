@@ -1,0 +1,27 @@
+name: simulated_singularity.interfaces.cli
+purpose: Present the implemented application diagnostics through the ss command.
+public_api:
+  - simulated_singularity.interfaces.cli.app.app
+  - simulated_singularity.interfaces.cli.app.main
+  - simulated_singularity.interfaces.cli.app.doctor
+  - ss --help
+  - ss doctor
+  - ss doctor --json
+owns:
+  - command help
+  - human and JSON report presentation
+  - command exit status
+depends_on:
+  - simulated_singularity.bootstrap
+  - typer
+  - dataclasses
+  - json
+  - typing
+prohibited_dependencies:
+  - simulated_singularity.infrastructure
+invariants:
+  - The CLI contains no compatibility policy.
+  - JSON output uses schema_version 1 and one complete report object.
+  - Successful checks exit 0; failed required checks exit 1.
+  - Invalid command usage exits 2.
+  - No commands expose unimplemented subsystems.
