@@ -1,0 +1,42 @@
+name: Release source gate
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+
+permissions:
+  contents: read
+
+jobs:
+  enforce-dev-to-main:
+    name: Enforce dev to main
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify release source
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.repository }}
+        run: |
+          echo "Source branch: $HEAD_REF"
+          echo "Source repository: $HEAD_REPO"
+          echo "Target repository: $BASE_REPO"
+
+          if [ "$HEAD_REF" != "dev" ]; then
+            echo "::error::Pull requests targeting main must originate from the dev branch."
+            exit 1
+          fi
+
+          if [ "$HEAD_REPO" != "$BASE_REPO" ]; then
+            echo "::error::The dev branch must belong to the base repository, not a fork."
+            exit 1
+          fi
+
+          echo "Valid release PR: dev -> main"
