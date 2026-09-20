@@ -1,7 +1,7 @@
 # Architecture decision records
 
-These records document the foundation authorized by the repository
-specifications. They do not authorize implementation of later milestones.
+These records document the reviewed foundation and Phase 2A artifact contracts.
+They do not authorize implementation of later slices.
 
 - [0001: Clean-slate platform and phase scope](0001-clean-slate-platform.md)
 - [0002: LangGraph execution and durable artifacts](0002-execution-and-artifacts.md)

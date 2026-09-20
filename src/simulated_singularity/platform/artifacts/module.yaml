@@ -1,0 +1,36 @@
+name: simulated_singularity.platform.artifacts
+purpose: Define immutable artifact and provenance contracts independent of persistence adapters.
+public_api:
+  - simulated_singularity.platform.artifacts.ArtifactPayload
+  - simulated_singularity.platform.artifacts.ArtifactRecord
+  - simulated_singularity.platform.artifacts.ArtifactType
+  - simulated_singularity.platform.artifacts.JsonValue
+  - simulated_singularity.platform.artifacts.ProvenanceRecord
+  - simulated_singularity.platform.artifacts.ArtifactRepository
+  - simulated_singularity.platform.artifacts.ArtifactError
+  - simulated_singularity.platform.artifacts.ArtifactIntegrityError
+  - simulated_singularity.platform.artifacts.ArtifactNotFoundError
+  - simulated_singularity.platform.artifacts.compute_sha256
+  - simulated_singularity.platform.artifacts.artifact_id_for_content
+  - simulated_singularity.platform.artifacts.verify_content_sha256
+owns:
+  - immutable artifact payload and record models
+  - immutable provenance model
+  - artifact repository port
+  - SHA-256 content identity derivation and verification
+  - JSON-compatible deeply immutable metadata
+depends_on:
+  - simulated_singularity.platform.identifiers
+  - standard-library value, hashing, and typing modules
+prohibited_dependencies:
+  - simulated_singularity.infrastructure
+  - simulated_singularity.interfaces
+  - filesystem and database APIs
+  - provider libraries
+  - execution orchestration and caching
+invariants:
+  - Artifact identity is the lowercase SHA-256 of payload bytes.
+  - Artifact and provenance values are immutable.
+  - Artifact metadata contains only finite JSON values and is deeply immutable.
+  - The repository contract exposes no filesystem path.
+  - Phase 2A provides no persistence implementation.

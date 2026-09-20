@@ -1,7 +1,8 @@
 # Simulated Singularity
 
 A clean-slate, LangGraph-native artifact factory. This checkout implements the
-Phase 0 + Phase 1 foundation only. See [the scope specification](docs/specifications/phase-0-1.md).
+reviewed Phase 1 foundation and Phase 2A immutable artifact contracts. See the
+[Phase 2 scope specification](docs/specifications/phase-2.md).
 
 The canonical application runtime is Linux/amd64, Python 3.12, in the pinned NVIDIA
 CUDA container. Linux development checks exercise the same Python code.
@@ -29,14 +30,16 @@ checks need no GPU because there are no inference providers.
 See [architecture](ARCHITECTURE.md), [contributing](CONTRIBUTING.md), and
 [documentation](docs/index.md) for contracts and validation details.
 
-The implemented application is a small diagnostics slice: a typed application
-contract, a standard-library runtime adapter, explicit composition, and a Typer
-client. Module manifests describe ownership and allowed dependencies beside the
+The implemented application includes the Phase 1 diagnostics slice plus nominal
+artifact identifiers, immutable artifact and provenance models, SHA-256
+content-addressing primitives, and the provider-neutral `ArtifactRepository`
+port. Module manifests describe ownership and allowed dependencies beside the
 code. Import-linter enforces the dependency direction.
 
-This milestone contains no speech production, models, artifact storage, graphs,
-or persistent state. LangGraph remains the specified future execution kernel;
-the dependency is introduced when execution is implemented.
+This milestone contains no speech production, models, filesystem artifact
+storage, SQLite metadata, graphs, or persistent state. The minimal `ExecutionKey`
+is only an opaque provenance reference; derivation and cache behavior remain
+Phase 3. LangGraph remains the specified future execution kernel.
 
-The next milestone is **Phase 2: implement the immutable artifact foundation**.
-It requires review of Phase 1 and explicit authorization before implementation.
+The next proposed slice is **Phase 2B: content-addressed filesystem repository**.
+It requires review of Phase 2A and explicit authorization before implementation.

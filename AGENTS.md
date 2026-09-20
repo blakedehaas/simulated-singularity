@@ -2,7 +2,7 @@
 
 **Status:** Normative repository instructions for coding agents and maintainers  
 **Repository:** `simulated-singularity`  
-**Current authorized milestone:** Phase 0 + Phase 1 only
+**Current authorized milestone:** Phase 2A — artifact contracts only
 
 This file is intentionally concise. It routes agents to the normative specifications and records the invariants that must be present in every implementation session. Do not duplicate the full specifications here.
 
@@ -10,33 +10,53 @@ This file is intentionally concise. It routes agents to the normative specificat
 
 Before making architectural or implementation decisions, read in this order:
 
-1. `docs/specifications/phase-0-1.md`
-2. `docs/specifications/technical-implementation-guide.md`
+1. `docs/specifications/phase-2.md`
+2. The Phase 2-relevant sections of
+   `docs/specifications/technical-implementation-guide.md` identified there.
 3. Relevant existing code, tests, module manifests, ADRs, and documentation for the area being changed.
 
 Authority rules:
 
-- `phase-0-1.md` is the **current scope gate**. It authorizes **Phase 0 and Phase 1 only**.
+- `phase-2.md` is the current milestone scope gate. The active implementation
+  slice is **Phase 2A only**.
 - `technical-implementation-guide.md` is the primary long-form architectural and implementation specification within the authorized scope.
 - A GitHub issue describes the task-specific delta; it does not silently override repository specifications.
 - If an issue conflicts with a normative specification, identify the conflict rather than silently following the issue.
-- Do not begin Phase 2 until Phase 1 has been reviewed and explicitly authorized.
+- Phase 1 is reviewed and merged. Do not begin Phase 2B until Phase 2A has been
+  reviewed and explicitly authorized.
 - If a time-sensitive dependency/runtime fact materially affects implementation, verify it against an authoritative current source when the available tools permit. Do not guess a version or compatibility claim.
 - If current authoritative behavior genuinely conflicts with the specifications, make the smallest principled adjustment and document the deviation.
 
-At the beginning of a new implementation thread, read both specifications completely. On continuation turns, revisit only the sections relevant to the current work unless context has been lost or the architectural question has changed.
+At the beginning of a new implementation thread, read the scope specification
+completely and every guide section it identifies. On continuation turns, revisit
+only the sections relevant to the current work unless context has been lost or
+the architectural question has changed.
 
-## 2. Current scope: Phase 0 + Phase 1
+## 2. Current scope: Phase 2A
 
-The immediate goal is a clean-slate, production-quality repository foundation.
+The immediate goal is the immutable artifact contract foundation on top of the
+merged Phase 1 repository.
 
-**Do not implement TTS yet.** In Phase 1, do not implement:
+Phase 2A implements only:
+
+- typed identifiers required by artifact and provenance contracts;
+- immutable artifact payload, record, and provenance models;
+- the provider-neutral `ArtifactRepository` port;
+- SHA-256 content-addressing derivation and verification;
+- a minimal opaque `ExecutionKey` reference with no Phase 3 behavior;
+- module manifests, architecture enforcement, documentation, unit tests, and a
+  reusable repository contract-test framework.
+
+**Do not implement persistence, execution, or TTS yet.** In Phase 2A, do not implement:
 
 - Qwen inference;
 - Whisper validation;
 - audiobook rendering;
-- artifact-production graphs;
-- the complete artifact subsystem;
+- filesystem artifact persistence or atomic filesystem writes;
+- SQLite metadata persistence;
+- execution-key derivation or execution caching;
+- LangGraph execution or artifact-production graphs;
+- run/review lifecycle behavior;
 - speech-production behavior;
 - simulation graphs or persistent simulated reality;
 - music, image, video, or other future modality capabilities;
@@ -156,7 +176,8 @@ Windows/WSL2 may host the container but is not a second application runtime.
 
 Do not add native-Windows inference, CPU fallback inference, AMD/DirectML fallback, or parallel runtime branches.
 
-During Phase 1, implement only runtime/deployment pieces actually authorized by the specifications. Do not pretend unavailable future providers or models exist.
+During Phase 2A, preserve the canonical runtime without adding deployment pieces
+for unavailable persistence adapters, providers, or models.
 
 ## 8. Documentation and ADR discipline
 
@@ -173,7 +194,7 @@ Do not write an ADR for ordinary implementation details. Do not make materially 
 
 ## 9. Development method
 
-Phase 1 establishes contracts future agents will inherit. Work conservatively and sequentially.
+Phase 2A establishes contracts future artifact adapters will inherit. Work conservatively and sequentially.
 
 For every meaningful increment:
 
@@ -185,13 +206,13 @@ For every meaningful increment:
 6. avoid temporary architecture and speculative abstractions;
 7. do not defer known correctness problems into TODOs.
 
-Do not parallelize independent architectural decisions during Phase 1. One agent may implement a bounded issue, but architectural contracts remain subject to human review before promotion.
+Do not parallelize independent architectural decisions during Phase 2A. One agent may implement a bounded issue, but architectural contracts remain subject to human review before promotion.
 
 Do not ask for clarification merely because several implementation details are reasonable. Choose the simplest design consistent with the specifications. Ask for human input when a materially different architectural decision from the specifications would be required.
 
-## 10. Required Phase 1 quality bar
+## 10. Required Phase 2A quality bar
 
-Phase 1 should finish with all applicable foundation checks green, including:
+Phase 2A should finish with all applicable foundation checks green, including:
 
 - clean container build;
 - successful package import;
@@ -215,7 +236,7 @@ Use reproducible dependency locking. Do not use unbounded `latest` dependencies.
 
 ## 11. Scope completion and handoff
 
-When a Phase 1 implementation issue is complete, provide a concise engineering handoff covering:
+When a Phase 2A implementation issue is complete, provide a concise engineering handoff covering:
 
 - what changed;
 - architecture/boundaries established;
@@ -226,7 +247,8 @@ When a Phase 1 implementation issue is complete, provide a concise engineering h
 - concise repository map when useful;
 - the next authorized milestone.
 
-The next milestone after reviewed Phase 1 is **Phase 2: immutable artifact foundation**. Do not begin it automatically.
+The next milestone after reviewed Phase 2A is **Phase 2B: content-addressed
+filesystem repository**. Do not begin it automatically.
 
 ## 12. Factory execution rules
 

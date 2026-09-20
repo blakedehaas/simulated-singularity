@@ -1,5 +1,5 @@
 site_name: Simulated Singularity
-site_description: Phase 0 and Phase 1 architecture foundation
+site_description: Phase 1 foundation and Phase 2A immutable artifact contracts
 strict: true
 theme:
   name: mkdocs
@@ -22,6 +22,7 @@ nav:
   - Architecture: architecture.md
   - Contributing: contributing.md
   - Module convention: architecture/modules.md
+  - Artifact contracts: architecture/artifacts.md
   - Dependency verification: architecture/dependencies.md
   - Reference:
       - CLI contract: architecture/cli.md
@@ -30,4 +31,5 @@ nav:
   - Decisions: adr/index.md
   - Specifications:
       - Phase 0–1: specifications/phase-0-1.md
+      - Phase 2: specifications/phase-2.md
       - Technical guide: specifications/technical-implementation-guide.md

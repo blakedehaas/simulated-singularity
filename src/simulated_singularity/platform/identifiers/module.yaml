@@ -1,0 +1,23 @@
+name: simulated_singularity.platform.identifiers
+purpose: Provide nominal, storage-independent identifiers required by artifact contracts.
+public_api:
+  - simulated_singularity.platform.identifiers.ArtifactId
+  - simulated_singularity.platform.identifiers.ProvenanceId
+  - simulated_singularity.platform.identifiers.CapabilityId
+  - simulated_singularity.platform.identifiers.ExecutionKey
+owns:
+  - identifier validation
+  - canonical identifier text serialization
+depends_on:
+  - dataclasses
+  - typing
+prohibited_dependencies:
+  - simulated_singularity.infrastructure
+  - simulated_singularity.interfaces
+  - filesystem and database APIs
+  - execution orchestration and caching
+invariants:
+  - Identifier classes are nominally distinct and immutable.
+  - ArtifactId is exactly a lowercase SHA-256 digest.
+  - Opaque identifier serialization preserves exact validated text.
+  - ExecutionKey has no derivation or cache semantics in Phase 2A.

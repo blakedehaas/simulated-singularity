@@ -60,6 +60,7 @@ layers = [
   "bootstrap",
   "infrastructure",
   "application",
+  "platform",
 ]
 containers = ["simulated_singularity"]
 exhaustive = true
@@ -81,6 +82,26 @@ forbidden_modules = [
   "subprocess", "ctypes", "docker", "torch", "qwen_tts", "whisper", "ffmpeg",
   "google", "fastapi", "flask",
 ]
+
+[[tool.importlinter.contracts]]
+name = "Platform contracts are independent of adapters and deployment"
+type = "forbidden"
+source_modules = ["simulated_singularity.platform"]
+forbidden_modules = [
+  "simulated_singularity.application", "simulated_singularity.infrastructure",
+  "simulated_singularity.interfaces", "simulated_singularity.bootstrap",
+  "typer", "click", "rich", "os", "pathlib", "sqlite3", "subprocess",
+  "ctypes", "docker", "torch", "qwen_tts", "whisper", "ffmpeg", "google",
+  "fastapi", "flask",
+]
+
+[[tool.importlinter.contracts]]
+name = "Artifact contracts depend inward on identifiers"
+type = "layers"
+layers = ["artifacts", "identifiers"]
+containers = ["simulated_singularity.platform"]
+exhaustive = true
+exhaustive_ignores = []
 
 [[tool.importlinter.contracts]]
 name = "Implemented modules are acyclic"

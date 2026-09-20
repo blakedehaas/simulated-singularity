@@ -3,5 +3,5 @@ services:
     platform: linux/amd64
     build:
       context: .
-    image: simulated-singularity:phase1
+    image: simulated-singularity:phase2a
     gpus: all

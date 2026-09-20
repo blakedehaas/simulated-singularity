@@ -1,9 +1,10 @@
 # Contributing
 
 Read the repository-root `AGENTS.md`, the complete
-[Phase 0–1 specification](docs/specifications/phase-0-1.md), and the complete
+[Phase 2 specification](docs/specifications/phase-2.md), and the Phase 2-relevant
+sections of the
 [Technical Implementation Guide](docs/specifications/technical-implementation-guide.md)
-before making architectural decisions. Phase 0 and Phase 1 are the current scope.
+before making architectural decisions. Phase 2A is the current implementation scope.
 
 Use Linux with Python 3.12 for development. The supported deployed application is
 the pinned NVIDIA CUDA container on `linux/amd64`. Docker with NVIDIA GPU support
@@ -18,7 +19,7 @@ make check
 ```
 
 `make bootstrap` installs the locked development environment. `make check` runs
-the foundation quality checks: lint, formatting, strict typing, import contracts,
+the applicable quality checks: lint, formatting, strict typing, import contracts,
 tests and coverage, compilation, and documentation. Production Python is held to
 100% coverage; tests should demonstrate behavior and failure handling, rather
 than merely execute lines.
@@ -45,7 +46,7 @@ replace a lock with unbounded runtime resolution.
 
 Inspect the relevant implementation, tests, documentation, and module manifest
 before editing. Make small coherent increments and run their relevant checks
-immediately. Keep application policy behind typed contracts, infrastructure in
+immediately. Keep application and platform policy behind typed contracts, infrastructure in
 adapters, and CLI code limited to input/output and process status. Prefer a pure
 function for stateless transformations. Do not create empty future packages.
 
@@ -61,8 +62,8 @@ Issue branches target `agent-dev` for review. Existing promotion gates allow onl
 titles start with `Release:`. Factory workers follow the publication instructions
 provided for their issue and leave their pull requests unmerged.
 
-A Phase 1 handoff states what changed, boundaries and public contracts, exact
+A Phase 2A handoff states what changed, boundaries and public contracts, exact
 validation results, deviations with rationale, intentional exclusions, a concise
-repository map, and the next proposed milestone: **Phase 2: implement the
-immutable artifact foundation**. Phase 2 starts only after Phase 1 review and
-explicit authorization.
+repository map, and the next proposed slice: **Phase 2B: content-addressed
+filesystem repository**. Phase 2B starts only after Phase 2A review and explicit
+authorization.
