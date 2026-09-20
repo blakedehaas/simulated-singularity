@@ -1,0 +1,17 @@
+.venv/
+.validation-venv/
+.tools/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.import_linter_cache/
+.coverage
+coverage.xml
+htmlcov/
+site/
+dist/
+build/
+.validation/

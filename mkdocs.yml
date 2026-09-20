@@ -1,0 +1,33 @@
+site_name: Simulated Singularity
+site_description: Phase 0 and Phase 1 architecture foundation
+strict: true
+theme:
+  name: mkdocs
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - scripts/generate_docs.py
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+            members_order: source
+            docstring_style: google
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Contributing: contributing.md
+  - Module convention: architecture/modules.md
+  - Dependency verification: architecture/dependencies.md
+  - Reference:
+      - CLI contract: architecture/cli.md
+      - Python API: reference/api.md
+      - CLI: reference/cli.md
+  - Decisions: adr/index.md
+  - Specifications:
+      - Phase 0–1: specifications/phase-0-1.md
+      - Technical guide: specifications/technical-implementation-guide.md

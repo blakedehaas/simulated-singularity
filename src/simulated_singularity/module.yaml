@@ -1,0 +1,13 @@
+name: simulated_singularity
+purpose: Compose the implemented application with its local runtime adapter.
+public_api:
+  - simulated_singularity.bootstrap.diagnose_runtime
+owns:
+  - application and adapter wiring
+depends_on:
+  - simulated_singularity.application
+  - simulated_singularity.infrastructure
+invariants:
+  - Composition owns no compatibility policy or presentation.
+  - Only implemented modules have public contracts.
+  - Runtime observation failures propagate.

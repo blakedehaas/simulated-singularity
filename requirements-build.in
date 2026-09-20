@@ -1,0 +1,4 @@
+# Build tooling is not installed in the final runtime image.
+pip==26.2.1
+hatchling==1.32.3
+build==1.6.1
